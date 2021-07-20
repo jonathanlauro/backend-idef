@@ -1,11 +1,14 @@
 package br.com.igrejaidef.Idef.dto.modelo;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.Column;
 
 public class Usuario {
 
     private Long id;
     private String login;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     private String email;
 
