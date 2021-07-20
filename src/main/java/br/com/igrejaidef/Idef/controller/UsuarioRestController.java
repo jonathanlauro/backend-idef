@@ -34,15 +34,16 @@ public class UsuarioRestController {
     public ResponseEntity<Usuario> atualizarUsuario(@RequestBody Usuario usuario) throws Exception {
         return ResponseEntity.ok(mapper.toModelo(repository.salvar(mapper.fromDto(usuario))));
     }
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Usuario> deletar(@RequestParam(name = "id") long id) throws Exception {
+    @DeleteMapping
+    public ResponseEntity<Usuario> deletarUsuario(@RequestParam long id) throws Exception{
         return ResponseEntity.ok(mapper.toModelo(repository.remover(id)));
     }
-    @GetMapping("/valida")
-    public ResponseEntity<Boolean> validaSenha(@RequestParam String login,
-                                               @RequestParam String password){
-        boolean valid = repository.validaSenha(login,password);
-        HttpStatus status = (valid) ? HttpStatus.OK : HttpStatus.UNAUTHORIZED;
-        return ResponseEntity.status(status).body(valid);
-    }
+
+//    @GetMapping("/valida")
+//    public ResponseEntity<Boolean> validaSenha(@RequestParam String login,
+//                                               @RequestParam String password){
+//        boolean valid = repository.validaSenha(login,password);
+//        HttpStatus status = (valid) ? HttpStatus.OK : HttpStatus.UNAUTHORIZED;
+//        return ResponseEntity.status(status).body(valid);
+//    }
 }

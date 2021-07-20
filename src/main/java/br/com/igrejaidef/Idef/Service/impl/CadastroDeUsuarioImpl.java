@@ -35,7 +35,8 @@ public class CadastroDeUsuarioImpl implements CadastroDeUsuario {
         UsuarioModel atualizar = repository.findById((long)usuarioModel.getId());
         if(atualizar == null){
             throw new NullPointerException("Usuário não encontrado");
-        }if(atualizar.getLogin().equals("admin")){
+        }
+        if(atualizar.getLogin().equals("admin")){
             throw new ServiceException("Admin não pode ser atualizado");
         }
         atualizar.setId(usuarioModel.getId());
