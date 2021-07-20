@@ -35,6 +35,8 @@ public class CadastroDeUsuarioImpl implements CadastroDeUsuario {
         UsuarioModel atualizar = repository.findById((long)usuarioModel.getId());
         if(atualizar == null){
             throw new NullPointerException("Usuário não encontrado");
+        }if(atualizar.getLogin().equals("admin")){
+            throw new ServiceException("Admin não pode ser atualizado");
         }
         atualizar.setId(usuarioModel.getId());
         atualizar.setLogin(usuarioModel.getLogin());
@@ -61,6 +63,13 @@ public class CadastroDeUsuarioImpl implements CadastroDeUsuario {
         UsuarioModel busca = repository.findById(id);
         if(busca == null){
             throw new NullPointerException("Usuario não encontrado");
+        }
+        List<UsuarioModel> buscarTudo = repository.findAll();
+        if(buscarTudo.size() < 2){
+            throw new ServiceException("Nao pode zerar o banco de usuários");
+        }
+        if(busca.getLogin().equals("admin")){
+            throw new ServiceException("Admin não pode ser deletado");
         }
         repository.deleteById(id);
         return busca;
