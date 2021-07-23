@@ -27,6 +27,7 @@ public class JWTConfiguracao extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(usuarioService).passwordEncoder(passwordEncoder);
     }
 
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().authorizeRequests()
@@ -36,7 +37,7 @@ public class JWTConfiguracao extends WebSecurityConfigurerAdapter {
         .addFilter(new JWTAutenticarFilter(authenticationManager()))
         .addFilter(new JWTValidarFilter(authenticationManager()))
         .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-
+        http.cors();
     }
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
@@ -46,4 +47,5 @@ public class JWTConfiguracao extends WebSecurityConfigurerAdapter {
         source.registerCorsConfiguration("/**",corsConfiguration);
         return source;
     }
+
 }

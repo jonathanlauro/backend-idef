@@ -3,6 +3,7 @@ package br.com.igrejaidef.Idef.Service;
 import br.com.igrejaidef.Idef.model.VisitanteModel;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
 import java.util.List;
 
 @Service
@@ -12,5 +13,7 @@ public interface CadastroDeVisitante {
     VisitanteModel atualizar(VisitanteModel visitante);
     VisitanteModel remover(long id);
     List<VisitanteModel> listar();
-    void enviarMsgDeAgradecimento();
+    void enviarMsgDeAgradecimento(String data) throws ParseException;
+
+    void enviarMsgDeAusencia(String data) throws ParseException;
 }

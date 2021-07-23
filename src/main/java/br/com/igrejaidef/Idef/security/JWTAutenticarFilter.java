@@ -1,6 +1,7 @@
 package br.com.igrejaidef.Idef.security;
 
 import br.com.igrejaidef.Idef.data.DetalheUsuarioData;
+import br.com.igrejaidef.Idef.model.Token;
 import br.com.igrejaidef.Idef.model.UsuarioModel;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -16,6 +17,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -60,7 +62,9 @@ public class JWTAutenticarFilter extends UsernamePasswordAuthenticationFilter {
                 .withSubject(usuarioData.getUsername())
                 .withExpiresAt(new Date(System.currentTimeMillis()+(TOKEN_EXPIRACAO*2)))
                 .sign(Algorithm.HMAC512(TOKEN_SENHA));
-        response.getWriter().write(token);
+        Token tk = new Token(token);
+        response.setContentType("application/json");
+        response.getWriter().print(tk);
         response.getWriter().flush();
     }
 }

@@ -5,10 +5,12 @@ import br.com.igrejaidef.Idef.controller.VisitanteRestController;
 import br.com.igrejaidef.Idef.dto.mapper.VisitanteMapper;
 import br.com.igrejaidef.Idef.dto.modelo.Visitante;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.text.ParseException;
 import java.util.List;
 
 @RestController
@@ -51,7 +53,15 @@ public class VisitanteRestControllerImpl implements VisitanteRestController {
     }
 
     @Override
-    public void enviarMsg() {
-        cadastro.enviarMsgDeAgradecimento();
+    public ResponseEntity<String> enviarMsg(String data) throws ParseException {
+
+        cadastro.enviarMsgDeAgradecimento(data);
+        return ResponseEntity.status(HttpStatus.OK).body("{\"msg\":\"Menssagem enviada\"}");
+    }
+
+    @Override
+    public ResponseEntity<String> enviarMsgAusencia(String data) throws ParseException {
+        cadastro.enviarMsgDeAusencia(data);
+        return ResponseEntity.status(HttpStatus.OK).body("{\"msg\":\"Menssagem enviada\"}");
     }
 }

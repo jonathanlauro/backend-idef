@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -58,13 +61,47 @@ public class CadastroDeVisitanteImpl implements CadastroDeVisitante {
     }
 
     @Override
-    public void enviarMsgDeAgradecimento() {
+    public void enviarMsgDeAgradecimento(String data) throws ParseException {
+        SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yyyy");
+        Date dataFormatada = formato.parse(data);
 
         String uri = ENDPOINT+"/send-message";
         RestTemplate restTemplate = new RestTemplate();
-        List<VisitanteModel> visitanteLista = repository.findAll();
-        for(VisitanteModel visitante : visitanteLista){
-            Body corpo = new Body(visitante.getTelefone(), "Obrigado por comparecer ao culto "+ visitante.getNome());
+        List<VisitanteModel> busca = repository.findAll();
+        List<VisitanteModel> visitantesDoDia = new ArrayList<>();
+        for(VisitanteModel visitantes:busca){
+            if(visitantes.getDataVisita().after(dataFormatada)){
+                visitantesDoDia.add(visitantes);
+            }
+        }
+        for(VisitanteModel visitante : visitantesDoDia){
+            Body corpo = new Body("55"+visitante.getTelefone(), "Oi "+ visitante.getNome()+
+                    " obrigado por comparecer ao culto, estamos em oração por você,"+
+                    " tem algum pedido específico? Nos mande uma menssagem aqui mesmo e vamos avisar a nossa equipe. "+
+                    "Deus Abençoe sua semana. ");
+            restTemplate.postForObject(uri,corpo,Object.class);
+        }
+
+    }
+    @Override
+    public void enviarMsgDeAusencia(String data) throws ParseException {
+        SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yyyy");
+        Date dataFormatada = formato.parse(data);
+
+        String uri = ENDPOINT+"/send-message";
+        RestTemplate restTemplate = new RestTemplate();
+        List<VisitanteModel> busca = repository.findAll();
+        List<VisitanteModel> visitantesDoDia = new ArrayList<>();
+        for(VisitanteModel visitantes:busca){
+            if(visitantes.getDataVisita().after(dataFormatada)){
+                visitantesDoDia.add(visitantes);
+            }
+        }
+        for(VisitanteModel visitante : visitantesDoDia){
+            Body corpo = new Body("55"+visitante.getTelefone(), "Oi "+ visitante.getNome()+
+                    ", está tudo bem com você ? Sentimos sua falta no culto..."+
+                    " Se precisar de algo, saiba que estamos sempre aqui. "+
+                    "Deus Abençoe sua semana. ");
             restTemplate.postForObject(uri,corpo,Object.class);
         }
 
@@ -76,7 +113,7 @@ public class CadastroDeVisitanteImpl implements CadastroDeVisitante {
         if(visitante.getNome() == null || visitante.getNome().isEmpty()){
             erro.add("nome nao pode ser vazio");
         }
-        if(visitante.getTelefone() == null || visitante.getTelefone().length() != 12){
+        if(visitante.getTelefone() == null || visitante.getTelefone().length() != 10){
             erro.add("telefone invalido!");
         }
         if(visitante.getEmail() == null || visitante.getEmail().isEmpty()){

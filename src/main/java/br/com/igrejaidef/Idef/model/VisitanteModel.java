@@ -13,7 +13,7 @@ public class VisitanteModel {
     private String nome;
     private String telefone;
     private String email;
-    private Date DataVisita;
+    private Date dataVisita;
 
     public VisitanteModel(){
         this(null,null,null,null,null);
@@ -23,7 +23,7 @@ public class VisitanteModel {
         this.nome = nome;
         this.telefone = telefone;
         this.email = email;
-        DataVisita = dataVisita;
+        this.dataVisita = dataVisita;
     }
 
     public Long getId() {
@@ -59,11 +59,11 @@ public class VisitanteModel {
     }
 
     public Date getDataVisita() {
-        return DataVisita;
+        return dataVisita;
     }
 
     public void setDataVisita(Date dataVisita) {
-        DataVisita = dataVisita;
+        this.dataVisita = dataVisita;
     }
 
     @Override
@@ -73,7 +73,7 @@ public class VisitanteModel {
                 ", nome='" + nome + '\'' +
                 ", telefone='" + telefone + '\'' +
                 ", email='" + email + '\'' +
-                ", DataVisita='" + DataVisita + '\'' +
+                ", DataVisita='" + dataVisita + '\'' +
                 '}';
     }
 }
