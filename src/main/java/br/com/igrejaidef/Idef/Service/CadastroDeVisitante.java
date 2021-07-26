@@ -10,10 +10,16 @@ import java.util.List;
 public interface CadastroDeVisitante {
 
     VisitanteModel adicionar(VisitanteModel visitante);
+
     VisitanteModel atualizar(VisitanteModel visitante);
+
     VisitanteModel remover(long id);
+
     List<VisitanteModel> listar();
+
     void enviarMsgDeAgradecimento(String data) throws ParseException;
 
     void enviarMsgDeAusencia(String data) throws ParseException;
+
+    void enviarMsgDeLembrete(String msg) throws ParseException;
 }

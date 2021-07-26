@@ -64,4 +64,10 @@ public class VisitanteRestControllerImpl implements VisitanteRestController {
         cadastro.enviarMsgDeAusencia(data);
         return ResponseEntity.status(HttpStatus.OK).body("{\"msg\":\"Menssagem enviada\"}");
     }
+
+    @Override
+    public ResponseEntity<String> enviarMsgLembrete(String msg) throws ParseException {
+        cadastro.enviarMsgDeLembrete(msg);
+        return ResponseEntity.status(HttpStatus.OK).body("{\"msg\":\"Menssagem enviada\"}");
+    }
 }

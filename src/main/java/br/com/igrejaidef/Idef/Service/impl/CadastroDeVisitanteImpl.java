@@ -65,12 +65,14 @@ public class CadastroDeVisitanteImpl implements CadastroDeVisitante {
         SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yyyy");
         Date dataFormatada = formato.parse(data);
 
+        Date amanha = new Date(dataFormatada.getTime() + (1000 * 60 * 60 * 24));
+
         String uri = ENDPOINT+"/send-message";
         RestTemplate restTemplate = new RestTemplate();
         List<VisitanteModel> busca = repository.findAll();
         List<VisitanteModel> visitantesDoDia = new ArrayList<>();
         for(VisitanteModel visitantes:busca){
-            if(visitantes.getDataVisita().after(dataFormatada)){
+            if(visitantes.getDataVisita().after(dataFormatada) && visitantes.getDataVisita().before(amanha)){
                 visitantesDoDia.add(visitantes);
             }
         }
@@ -79,6 +81,19 @@ public class CadastroDeVisitanteImpl implements CadastroDeVisitante {
                     " obrigado por comparecer ao culto, estamos em oração por você,"+
                     " tem algum pedido específico? Nos mande uma menssagem aqui mesmo e vamos avisar a nossa equipe. "+
                     "Deus Abençoe sua semana. ");
+            restTemplate.postForObject(uri,corpo,Object.class);
+        }
+
+    }
+    @Override
+    public void enviarMsgDeLembrete(String msg) throws ParseException {
+        String uri = ENDPOINT+"/send-message";
+        RestTemplate restTemplate = new RestTemplate();
+        List<VisitanteModel> visitantes = repository.findAll();
+
+        for(VisitanteModel visitante : visitantes){
+            Body corpo = new Body("55"+visitante.getTelefone(), "Oi "+ visitante.getNome()+
+                    " tudo bem ? "+msg);
             restTemplate.postForObject(uri,corpo,Object.class);
         }
 

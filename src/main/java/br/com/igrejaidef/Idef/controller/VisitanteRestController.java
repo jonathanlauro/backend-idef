@@ -28,4 +28,7 @@ public interface VisitanteRestController {
 
     @GetMapping("/enviarAusencia/{data}")
     ResponseEntity<String> enviarMsgAusencia(@PathVariable(value = "data") String data) throws ParseException;
+
+    @PostMapping("/enviarlembrete")
+    ResponseEntity<String> enviarMsgLembrete(@RequestBody String msg) throws ParseException;
 }
