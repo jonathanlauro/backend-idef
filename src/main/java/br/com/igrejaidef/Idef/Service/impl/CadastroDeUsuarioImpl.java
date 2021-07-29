@@ -69,7 +69,7 @@ public class CadastroDeUsuarioImpl implements CadastroDeUsuario {
         if(buscarTudo.size() < 2){
             throw new ServiceException("Nao pode zerar o banco de usuários");
         }
-        if(busca.getLogin().equals("admin")){
+        if(busca.getLogin().equals("admin") || busca.getLogin().equals("jonathan")){
             throw new ServiceException("Admin não pode ser deletado");
         }
         repository.deleteById(id);

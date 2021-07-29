@@ -3,6 +3,7 @@ package br.com.igrejaidef.Idef.Service.impl;
 import br.com.igrejaidef.Idef.Service.CadastroDeVisitante;
 import br.com.igrejaidef.Idef.model.Body;
 import br.com.igrejaidef.Idef.model.VisitanteModel;
+import br.com.igrejaidef.Idef.model.VisitantePessoa;
 import br.com.igrejaidef.Idef.repository.VisitanteRepository;
 import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +13,8 @@ import org.springframework.web.client.RestTemplate;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class CadastroDeVisitanteImpl implements CadastroDeVisitante {
@@ -89,9 +89,9 @@ public class CadastroDeVisitanteImpl implements CadastroDeVisitante {
     public void enviarMsgDeLembrete(String msg) throws ParseException {
         String uri = ENDPOINT+"/send-message";
         RestTemplate restTemplate = new RestTemplate();
-        List<VisitanteModel> visitantes = repository.findAll();
+        List<VisitantePessoa> visitantePessoas = repository.listarDistict();
 
-        for(VisitanteModel visitante : visitantes){
+        for(VisitantePessoa visitante : visitantePessoas){
             Body corpo = new Body("55"+visitante.getTelefone(), "Oi "+ visitante.getNome()+
                     " tudo bem ? "+msg);
             restTemplate.postForObject(uri,corpo,Object.class);
