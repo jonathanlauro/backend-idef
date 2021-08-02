@@ -48,7 +48,7 @@ public class CadastroDeUsuarioImpl implements CadastroDeUsuario {
 
     @Override
     public List<UsuarioModel> listar() {
-        return repository.findAll();
+        return repository.listarTodosDescId();
     }
 
     @Override
