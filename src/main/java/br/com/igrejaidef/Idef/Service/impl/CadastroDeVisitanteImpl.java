@@ -57,7 +57,7 @@ public class CadastroDeVisitanteImpl implements CadastroDeVisitante {
 
     @Override
     public List<VisitanteModel> listar() {
-        return repository.findAll();
+        return repository.listarTodosDesc();
     }
 
     @Override

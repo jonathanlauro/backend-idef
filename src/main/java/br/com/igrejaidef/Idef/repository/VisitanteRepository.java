@@ -12,4 +12,7 @@ public interface VisitanteRepository extends JpaRepository<VisitanteModel,Long> 
 
     @Query("select distinct new br.com.igrejaidef.Idef.model.VisitantePessoa(a.nome,a.telefone) from VisitanteModel a ")
     List<VisitantePessoa> listarDistict();
+
+    @Query("select u from VisitanteModel u order by u.dataVisita DESC ")
+    List<VisitanteModel>listarTodosDesc();
 }
