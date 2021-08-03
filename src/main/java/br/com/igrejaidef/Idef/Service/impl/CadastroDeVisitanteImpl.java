@@ -77,10 +77,10 @@ public class CadastroDeVisitanteImpl implements CadastroDeVisitante {
             }
         }
         for(VisitanteModel visitante : visitantesDoDia){
-            Body corpo = new Body("55"+visitante.getTelefone(), "Oi "+ visitante.getNome()+
-                    " obrigado por comparecer ao culto, estamos em oração por você,"+
-                    " tem algum pedido específico? Nos mande uma menssagem aqui mesmo e vamos avisar a nossa equipe. "+
-                    "Deus Abençoe sua semana. ");
+            Body corpo = new Body("55"+visitante.getTelefone(), "Oi, "+ visitante.getNome()+
+                    "! Obrigado por comparecer ao culto, estamos em oração por você."+
+                    " Gostaria de oração por algo em específico? Nos mande uma mensagem por aqui mesmo e vamos avisar a nossa equipe. "+
+                    "Deus abençoe sua semana. ");
             restTemplate.postForObject(uri,corpo,Object.class);
         }
 
@@ -113,10 +113,10 @@ public class CadastroDeVisitanteImpl implements CadastroDeVisitante {
             }
         }
         for(VisitanteModel visitante : visitantesDoDia){
-            Body corpo = new Body("55"+visitante.getTelefone(), "Oi "+ visitante.getNome()+
-                    ", está tudo bem com você ? Sentimos sua falta no culto..."+
-                    " Se precisar de algo, saiba que estamos sempre aqui. "+
-                    "Deus Abençoe sua semana. ");
+            Body corpo = new Body("55"+visitante.getTelefone(), "Oi, "+ visitante.getNome()+
+                    "! Está tudo bem com você ? Sentimos sua falta no culto."+
+                    " Se precisar de algo, saiba que estamos sempre aqui orando por você. "+
+                    "Deus abençoe sua semana. ");
             restTemplate.postForObject(uri,corpo,Object.class);
         }
 
