@@ -22,7 +22,7 @@ public class CadastroDeVisitanteImpl implements CadastroDeVisitante {
     @Autowired
     VisitanteRepository repository;
 
-    private static String ENDPOINT = "http://89c657c47472.ngrok.io";
+    private static String ENDPOINT = "http://edde-2804-14c-65f0-8478-7466-f8a6-1628-6fa9.ngrok.io";
 
     @Override
     public VisitanteModel adicionar(VisitanteModel visitante) {
