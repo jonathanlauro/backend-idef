@@ -94,7 +94,7 @@ public class CadastroDeVisitanteImpl implements CadastroDeVisitante {
         for(VisitanteModel visitante : visitantePessoas){
             Body corpo = new Body("55"+visitante.getTelefone(), "Oi "+ visitante.getNome()+
                     " tudo bem ? "+msg);
-            restTemplate.postForObject(uri,corpo,null);
+            restTemplate.postForObject(uri,corpo,Object.class);
         }
 
     }
