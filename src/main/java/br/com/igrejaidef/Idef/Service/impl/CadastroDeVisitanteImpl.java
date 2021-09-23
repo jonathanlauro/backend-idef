@@ -89,12 +89,12 @@ public class CadastroDeVisitanteImpl implements CadastroDeVisitante {
     public void enviarMsgDeLembrete(String msg) throws ParseException {
         String uri = ENDPOINT+"/send-message";
         RestTemplate restTemplate = new RestTemplate();
-        List<VisitantePessoa> visitantePessoas = repository.listarDistict();
+        List<VisitanteModel> visitantePessoas = repository.listarTodosDesc();
 
-        for(VisitantePessoa visitante : visitantePessoas){
+        for(VisitanteModel visitante : visitantePessoas){
             Body corpo = new Body("55"+visitante.getTelefone(), "Oi "+ visitante.getNome()+
                     " tudo bem ? "+msg);
-            restTemplate.postForObject(uri,corpo,Object.class);
+            restTemplate.postForObject(uri,corpo,null);
         }
 
     }
