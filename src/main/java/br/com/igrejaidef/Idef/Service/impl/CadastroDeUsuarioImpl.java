@@ -94,7 +94,7 @@ public class CadastroDeUsuarioImpl implements CadastroDeUsuario {
         }
         UsuarioModel usuario = repository.findByLogin(login);
         if(usuario == null){
-            return "nao achei pow!";
+            return "nao achei pow!"+login;
         }
         return usuario.getRole();
     }
