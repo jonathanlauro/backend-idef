@@ -14,6 +14,8 @@ import java.util.stream.Collectors;
 public class DetalheUsuarioData implements UserDetails {
 
     private final Optional<UsuarioModel> usuario;
+    private UsuarioModel usr;
+    private String role = usr.getRole();
 
     public DetalheUsuarioData(Optional<UsuarioModel> usuario) {
         this.usuario = usuario;
@@ -21,12 +23,12 @@ public class DetalheUsuarioData implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-//
-//        return Arrays.stream(new UsuarioModel().getRole().split(","))
-//                .map(SimpleGrantedAuthority::new)
-//                .collect(Collectors.toList());
 
-        return new ArrayList<>();
+        return Arrays.stream(role.split(","))
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
+
+//        return new ArrayList<>();
     }
 
     @Override
