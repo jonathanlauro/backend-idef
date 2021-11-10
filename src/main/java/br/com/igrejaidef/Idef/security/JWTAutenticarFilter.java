@@ -47,7 +47,8 @@ public class JWTAutenticarFilter extends UsernamePasswordAuthenticationFilter {
             return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                     usuario.getLogin(),
                     usuario.getPassword(),
-                    new ArrayList<>()
+                    usuario.getAuthorities()
+//                    new ArrayList<>()
             ));
         } catch (IOException e) {
             throw new RuntimeException("Falha ao autenticar usuário ", e);
@@ -59,7 +60,7 @@ public class JWTAutenticarFilter extends UsernamePasswordAuthenticationFilter {
                                             HttpServletResponse response,
                                             FilterChain chain,
                                             Authentication authResult) throws IOException, ServletException {
-        DetalheUsuarioData usuarioData = (DetalheUsuarioData) authResult.getPrincipal();
+        UsuarioModel usuarioData = (UsuarioModel) authResult.getPrincipal();
 
         String token = JWT.create()
                 .withSubject(usuarioData.getUsername())
