@@ -23,7 +23,7 @@ public interface UsuarioRestControllerr {
     @DeleteMapping
     ResponseEntity<Usuario> deletarUsuario(@RequestParam long id) throws Exception;
 
-    @GetMapping("/{login}/buscarole")
+    @GetMapping("/buscarole/{login}")
     ResponseEntity<String> buscaRole(@PathParam("login") String login) throws Exception;
 
 }
