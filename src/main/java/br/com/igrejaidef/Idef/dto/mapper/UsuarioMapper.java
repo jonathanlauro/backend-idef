@@ -39,7 +39,8 @@ public class UsuarioMapper implements Mapper<UsuarioModel, Usuario>{
                 model.getId(),
                 model.getLogin(),
                 model.getPassword(),
-                model.getEmail()
+                model.getEmail(),
+                model.getRole()
         );
     }
     public UsuarioModel fromDto(Usuario dto){
@@ -47,7 +48,8 @@ public class UsuarioMapper implements Mapper<UsuarioModel, Usuario>{
                 dto.getId(),
                 dto.getLogin(),
                 dto.getPassword(),
-                dto.getEmail()
+                dto.getEmail(),
+                dto.getRole()
         );
     }
 }

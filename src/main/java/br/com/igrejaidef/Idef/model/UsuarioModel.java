@@ -13,16 +13,18 @@ public class UsuarioModel{
     private String login;
     private String password;
     private String email;
+    private String role;
 
     public UsuarioModel(){
-        this(null,null,null, null);
+        this(null,null,null, null, null);
     }
 
-    public UsuarioModel(Long id, String login, String password, String email) {
+    public UsuarioModel(Long id, String login, String password, String email, String role) {
         this.id = id;
         this.login = login;
         this.password = password;
         this.email = email;
+        this.role = role;
     }
 
     public void setId(Long id) {
@@ -57,6 +59,14 @@ public class UsuarioModel{
         this.email = email;
     }
 
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
     @Override
     public String toString() {
         return "UsuarioModel{" +
@@ -64,6 +74,7 @@ public class UsuarioModel{
                 ", login='" + login + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
+                ", role='" + role + '\'' +
                 '}';
     }
 }

@@ -19,4 +19,6 @@ public interface CadastroDeUsuario {
     UsuarioModel remover(long id);
 
     Boolean validaSenha(String login, String password);
+
+    String buscaRole(String login);
 }

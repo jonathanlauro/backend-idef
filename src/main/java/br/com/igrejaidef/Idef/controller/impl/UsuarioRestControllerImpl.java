@@ -39,6 +39,11 @@ public class UsuarioRestControllerImpl implements UsuarioRestControllerr {
         return ResponseEntity.ok(mapper.toModelo(repository.remover(id)));
     }
 
+    @Override
+    public ResponseEntity<String> buscaRole(String login) throws Exception {
+        return ResponseEntity.ok(repository.buscaRole(login));
+    }
+
 //    @GetMapping("/valida")
 //    public ResponseEntity<Boolean> validaSenha(@RequestParam String login,
 //                                               @RequestParam String password){

@@ -11,15 +11,18 @@ public class Usuario {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     private String email;
+    private String role;
 
     public Usuario(){
-        this(null,null,null,null);
+        this(null,null,null,null,null);
     }
-    public Usuario(Long id, String login, String password, String email) {
+
+    public Usuario(Long id, String login, String password, String email,String role) {
         this.id = id;
         this.login = login;
         this.password = password;
         this.email = email;
+        this.role = role;
     }
 
     public Long getId() {
@@ -54,6 +57,14 @@ public class Usuario {
         this.email = email;
     }
 
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
     @Override
     public String toString() {
         return "Usuario{" +
@@ -61,6 +72,7 @@ public class Usuario {
                 ", login='" + login + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
+                ", role='" + role + '\'' +
                 '}';
     }
 }

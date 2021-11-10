@@ -87,6 +87,12 @@ public class CadastroDeUsuarioImpl implements CadastroDeUsuario {
         return valid;
     }
 
+    @Override
+    public String buscaRole(String login) {
+        UsuarioModel usuario = repository.findByLogin(login);
+        return usuario.getRole();
+    }
+
     private void validaUsuario(UsuarioModel usuario) throws ServiceException{
         List<String> erros = new ArrayList<>();
         if(usuario.getLogin()==null || usuario.getLogin().isEmpty()){
