@@ -89,13 +89,7 @@ public class CadastroDeUsuarioImpl implements CadastroDeUsuario {
 
     @Override
     public UsuarioModel buscaRole(String login) {
-        if(login == null){
-            return "login null pow!";
-        }
         UsuarioModel usuario = repository.findByLogin(login);
-        if(usuario == null){
-            return "nao achei pow!"+login;
-        }
         return usuario;
     }
 
