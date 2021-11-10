@@ -59,11 +59,11 @@ public class JWTAutenticarFilter extends UsernamePasswordAuthenticationFilter {
                                             HttpServletResponse response,
                                             FilterChain chain,
                                             Authentication authResult) throws IOException, ServletException {
-        DetalheUsuarioData usuarioData = (DetalheUsuarioData) authResult.getPrincipal();
+        UsuarioModel usuarioData = (UsuarioModel) authResult.getPrincipal();
 
         String token = JWT.create()
                 .withSubject(usuarioData.getUsername())
-                .withClaim("role", Arrays.asList(usuarioData.getAuthorities().toArray()))
+                .withClaim("role", usuarioData.getRole())
                 .withExpiresAt(new Date(System.currentTimeMillis()+(TOKEN_EXPIRACAO*2)))
                 .sign(Algorithm.HMAC512(TOKEN_SENHA));
         Token tk = new Token(token);

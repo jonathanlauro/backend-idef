@@ -13,30 +13,25 @@ import java.util.stream.Collectors;
 
 public class DetalheUsuarioData implements UserDetails {
 
-    private UsuarioModel usuario;
+    private final Optional<UsuarioModel> usuario;
 
-    public DetalheUsuarioData(UsuarioModel usuario) {
+    public DetalheUsuarioData(Optional<UsuarioModel> usuario) {
         this.usuario = usuario;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-
-        return Arrays.stream(usuario.getRole().split(","))
-                .map(SimpleGrantedAuthority::new)
-                .collect(Collectors.toList());
-
-//        return new ArrayList<>();
+        return new ArrayList<>();
     }
 
     @Override
     public String getPassword() {
-        return usuario.getPassword();
+        return usuario.orElse(new UsuarioModel()).getPassword();
     }
 
     @Override
     public String getUsername() {
-        return usuario.getUsername();
+        return usuario.orElse(new UsuarioModel()).getLogin();
     }
 
     @Override
