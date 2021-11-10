@@ -91,7 +91,7 @@ public class CadastroDeUsuarioImpl implements CadastroDeUsuario {
     public String buscaRole(String login) {
         UsuarioModel usuario = repository.findByLogin(login);
         if(usuario == null){
-            throw new ServiceException("Deu ruim");
+            return "nao achei pow!";
         }
         return usuario.getRole();
     }
