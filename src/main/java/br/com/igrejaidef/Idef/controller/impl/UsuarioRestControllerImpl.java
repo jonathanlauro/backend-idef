@@ -41,7 +41,7 @@ public class UsuarioRestControllerImpl implements UsuarioRestControllerr {
     }
 
     @Override
-    public ResponseEntity<String> buscaRole(String login) throws Exception {
+    public ResponseEntity<String> buscaRole(@RequestParam String login) throws Exception {
         return ResponseEntity.ok(repository.buscaRole(login));
     }
 
