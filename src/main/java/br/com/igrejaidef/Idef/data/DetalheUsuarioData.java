@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 public class DetalheUsuarioData implements UserDetails {
 
-    private final UsuarioModel usuario;
+    private UsuarioModel usuario;
 
     public DetalheUsuarioData(UsuarioModel usuario) {
         this.usuario = usuario;
