@@ -2,11 +2,14 @@ package br.com.igrejaidef.Idef.data;
 
 import br.com.igrejaidef.Idef.model.UsuarioModel;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class DetalheUsuarioData implements UserDetails {
 
@@ -18,7 +21,12 @@ public class DetalheUsuarioData implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return new ArrayList<>();
+
+        return Arrays.stream(new UsuarioModel().getRole().split(","))
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
+
+//        return new ArrayList<>();
     }
 
     @Override
