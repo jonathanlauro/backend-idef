@@ -18,10 +18,7 @@ public class DetalheUsuarioData implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-//        return Arrays.stream(usuario.orElse(new UsuarioModel()).getRole().split(","))
-//                .map(SimpleGrantedAuthority::new)
-//                .collect(Collectors.toList());
-    return new ArrayList<>();
+    return usuario.orElse(new UsuarioModel()).getAuthorities();
     }
 
     @Override
