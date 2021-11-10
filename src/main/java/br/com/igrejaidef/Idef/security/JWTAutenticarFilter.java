@@ -10,6 +10,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.servlet.FilterChain;
@@ -19,7 +20,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.stream.Collectors;
 
 public class JWTAutenticarFilter extends UsernamePasswordAuthenticationFilter {
 
@@ -44,7 +47,10 @@ public class JWTAutenticarFilter extends UsernamePasswordAuthenticationFilter {
             return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                     usuario.getLogin(),
                     usuario.getPassword(),
-                    new ArrayList<>()
+                    Arrays.stream(usuario.getRole().split(","))
+                            .map(SimpleGrantedAuthority::new)
+                            .collect(Collectors.toList())
+//                    new ArrayList<>()
             ));
         } catch (IOException e) {
             throw new RuntimeException("Falha ao autenticar usuário ", e);
@@ -60,7 +66,7 @@ public class JWTAutenticarFilter extends UsernamePasswordAuthenticationFilter {
 
         String token = JWT.create()
                 .withSubject(usuarioData.getUsername())
-//                .withClaim("Role", usuarioData.getAuthorities().toString())
+                .withClaim("Role", usuarioData.getAuthorities().toString())
                 .withExpiresAt(new Date(System.currentTimeMillis()+(TOKEN_EXPIRACAO*2)))
                 .sign(Algorithm.HMAC512(TOKEN_SENHA));
         Token tk = new Token(token);
