@@ -20,5 +20,5 @@ public interface CadastroDeUsuario {
 
     Boolean validaSenha(String login, String password);
 
-    String buscaRole(String login);
+    UsuarioModel buscaRole(String login);
 }

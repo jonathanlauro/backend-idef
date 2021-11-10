@@ -41,8 +41,8 @@ public class UsuarioRestControllerImpl implements UsuarioRestControllerr {
     }
 
     @Override
-    public ResponseEntity<String> buscaRole(@RequestParam String login) throws Exception {
-        return ResponseEntity.ok(repository.buscaRole(login));
+    public ResponseEntity<Usuario> buscaRole(@RequestParam String login) throws Exception {
+        return ResponseEntity.ok(mapper.toModelo(repository.buscaRole(login)));
     }
 
 //    @GetMapping("/valida")

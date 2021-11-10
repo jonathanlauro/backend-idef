@@ -24,6 +24,6 @@ public interface UsuarioRestControllerr {
     ResponseEntity<Usuario> deletarUsuario(@RequestParam long id) throws Exception;
 
     @GetMapping("/buscarole")
-    ResponseEntity<String> buscaRole(@RequestParam String login) throws Exception;
+    ResponseEntity<Usuario> buscaRole(@RequestParam String login) throws Exception;
 
 }

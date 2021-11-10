@@ -88,7 +88,7 @@ public class CadastroDeUsuarioImpl implements CadastroDeUsuario {
     }
 
     @Override
-    public String buscaRole(String login) {
+    public UsuarioModel buscaRole(String login) {
         if(login == null){
             return "login null pow!";
         }
@@ -96,7 +96,7 @@ public class CadastroDeUsuarioImpl implements CadastroDeUsuario {
         if(usuario == null){
             return "nao achei pow!"+login;
         }
-        return usuario.getRole();
+        return usuario;
     }
 
     private void validaUsuario(UsuarioModel usuario) throws ServiceException{
