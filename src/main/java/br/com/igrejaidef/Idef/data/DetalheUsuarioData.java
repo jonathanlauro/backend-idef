@@ -22,11 +22,11 @@ public class DetalheUsuarioData implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
 
-        return Arrays.stream(new UsuarioModel().getRole().split(","))
-                .map(SimpleGrantedAuthority::new)
-                .collect(Collectors.toList());
+//        return Arrays.stream(new UsuarioModel().getRole().split(","))
+//                .map(SimpleGrantedAuthority::new)
+//                .collect(Collectors.toList());
 
-//        return new ArrayList<>();
+        return new ArrayList<>();
     }
 
     @Override
