@@ -50,4 +50,8 @@ public class DetalheUsuarioData implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    public String getSingleRole(){
+        return usuario.orElse(new UsuarioModel()).getRole();
+    }
 }

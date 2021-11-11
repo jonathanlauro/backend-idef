@@ -52,10 +52,7 @@ public class UsuarioModel implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        SimpleGrantedAuthority autoriza = new SimpleGrantedAuthority(role);
-        List<GrantedAuthority> lista = new ArrayList<>();
-        lista.add(autoriza);
-        return lista;
+        return new ArrayList<>();
     }
 
     public String getPassword() {
