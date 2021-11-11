@@ -1,11 +1,13 @@
 package br.com.igrejaidef.Idef.model;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name = "TB_USUARIO")
@@ -50,11 +52,9 @@ public class UsuarioModel implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-//        List<GrantedAuthority> lista = new ArrayList<>();
-//        List<String> roles = Arrays.asList(role.split(","));
-//        roles.forEach(row -> lista.add(new SimpleGrantedAuthority(row)));
-//        return lista;
-        return new ArrayList<>();
+        List<GrantedAuthority> lista = new ArrayList<>();
+        lista.add(new SimpleGrantedAuthority(role));
+        return lista;
     }
 
     public String getPassword() {
