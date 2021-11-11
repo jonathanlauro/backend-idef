@@ -57,11 +57,11 @@ public class UsuarioModel implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<GrantedAuthority> lista = new ArrayList<>();
-        List<String> roles = Arrays.asList(role.split(","));
-        roles.forEach(row -> lista.add(new SimpleGrantedAuthority(row)));
-        return lista;
-//        return new ArrayList<>();
+//        List<GrantedAuthority> lista = new ArrayList<>();
+//        List<String> roles = Arrays.asList(role.split(","));
+//        roles.forEach(row -> lista.add(new SimpleGrantedAuthority(row)));
+//        return lista;
+        return new ArrayList<>();
     }
 
     public String getPassword() {
