@@ -53,7 +53,8 @@ public class UsuarioModel implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return new ArrayList<>();
+        return Arrays.asList(role.split(",")).stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+//        return new ArrayList<>();
     }
 
     public String getPassword() {
