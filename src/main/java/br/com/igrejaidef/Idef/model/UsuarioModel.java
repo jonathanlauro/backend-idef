@@ -8,6 +8,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Entity
@@ -53,7 +54,10 @@ public class UsuarioModel implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Arrays.stream(role.split(",")).map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+        List<GrantedAuthority> lista = new ArrayList<>();
+        List<String> roles = new ArrayList<>(Arrays.asList(role.split(",")));
+        roles.forEach(row -> lista.add(new SimpleGrantedAuthority(row)));
+        return lista;
 //        return new ArrayList<>();
     }
 
