@@ -60,7 +60,6 @@ public class UsuarioModel implements UserDetails {
         List<GrantedAuthority> lista = new ArrayList<>();
         List<String> roles = Arrays.asList(role.split(","));
         roles.forEach(row -> lista.add(new SimpleGrantedAuthority(row)));
-        logger.info("resposta: " + lista.toString());
         return lista;
 //        return new ArrayList<>();
     }
