@@ -52,8 +52,9 @@ public class UsuarioModel implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+        SimpleGrantedAuthority autoriza = new SimpleGrantedAuthority(role);
         List<GrantedAuthority> lista = new ArrayList<>();
-        lista.add(new SimpleGrantedAuthority(role));
+        lista.add(autoriza);
         return lista;
     }
 
