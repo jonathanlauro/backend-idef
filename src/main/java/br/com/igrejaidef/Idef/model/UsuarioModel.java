@@ -1,16 +1,11 @@
 package br.com.igrejaidef.Idef.model;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 
 @Entity
 @Table(name = "TB_USUARIO")
@@ -24,8 +19,6 @@ public class UsuarioModel implements UserDetails {
     private String password;
     private String email;
     private String role;
-
-    Logger logger = LoggerFactory.getLogger(UsuarioModel.class);
 
     public UsuarioModel(){
         this(null,null,null, null, null);
