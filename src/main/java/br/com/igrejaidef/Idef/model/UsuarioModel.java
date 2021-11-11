@@ -1,5 +1,7 @@
 package br.com.igrejaidef.Idef.model;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,7 +11,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "TB_USUARIO")
@@ -23,6 +24,8 @@ public class UsuarioModel implements UserDetails {
     private String password;
     private String email;
     private String role;
+
+    Logger logger = LoggerFactory.getLogger(UsuarioModel.class);
 
     public UsuarioModel(){
         this(null,null,null, null, null);
@@ -55,8 +58,9 @@ public class UsuarioModel implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> lista = new ArrayList<>();
-        List<String> roles = new ArrayList<>(Arrays.asList(role.split(",")));
+        List<String> roles = Arrays.asList(role.split(","));
         roles.forEach(row -> lista.add(new SimpleGrantedAuthority(row)));
+        logger.info("resposta: " + lista.toString());
         return lista;
 //        return new ArrayList<>();
     }
