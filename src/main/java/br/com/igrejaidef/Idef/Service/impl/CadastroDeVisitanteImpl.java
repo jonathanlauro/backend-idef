@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import javax.mail.MessagingException;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -22,12 +23,17 @@ public class CadastroDeVisitanteImpl implements CadastroDeVisitante {
     @Autowired
     VisitanteRepository repository;
 
+    @Autowired
+    SendEmailService serviceEmail;
+
     private static String ENDPOINT = "http://e60b-2804-14c-65f0-8478-b84c-94d4-33c7-d632.ngrok.io";
 
+
     @Override
-    public VisitanteModel adicionar(VisitanteModel visitante) {
+    public VisitanteModel adicionar(VisitanteModel visitante) throws MessagingException {
         validaVisitante(visitante);
         visitante.setDataVisita(new Date());
+
         return repository.save(visitante);
     }
 

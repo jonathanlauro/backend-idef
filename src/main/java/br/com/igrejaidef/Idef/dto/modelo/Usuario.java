@@ -1,8 +1,10 @@
 package br.com.igrejaidef.Idef.dto.modelo;
 
+import br.com.igrejaidef.Idef.model.Role;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.Column;
+import java.util.List;
 
 public class Usuario {
 
@@ -11,18 +13,18 @@ public class Usuario {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     private String email;
-    private String role;
+    private List<String> roles;
 
-    public Usuario(){
+    public Usuario() {
         this(null,null,null,null,null);
     }
 
-    public Usuario(Long id, String login, String password, String email,String role) {
+    public Usuario(Long id, String login, String password, String email, List<String> roles) {
         this.id = id;
         this.login = login;
         this.password = password;
         this.email = email;
-        this.role = role;
+        this.roles = roles;
     }
 
     public Long getId() {
@@ -57,22 +59,11 @@ public class Usuario {
         this.email = email;
     }
 
-    public String getRole() {
-        return role;
+    public List<String> getRoles() {
+        return roles;
     }
 
-    public void setRole(String role) {
-        this.role = role;
-    }
-
-    @Override
-    public String toString() {
-        return "Usuario{" +
-                "id=" + id +
-                ", login='" + login + '\'' +
-                ", password='" + password + '\'' +
-                ", email='" + email + '\'' +
-                ", role='" + role + '\'' +
-                '}';
+    public void setRoles(List<String> roles) {
+        this.roles = roles;
     }
 }

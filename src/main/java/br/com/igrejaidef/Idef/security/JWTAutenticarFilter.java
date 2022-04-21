@@ -1,6 +1,7 @@
 package br.com.igrejaidef.Idef.security;
 
 import br.com.igrejaidef.Idef.data.DetalheUsuarioData;
+import br.com.igrejaidef.Idef.model.Role;
 import br.com.igrejaidef.Idef.model.Token;
 import br.com.igrejaidef.Idef.model.UsuarioModel;
 import com.auth0.jwt.JWT;
@@ -10,7 +11,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.servlet.FilterChain;
@@ -18,11 +19,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.stream.Collectors;
+import java.util.List;
 
 public class JWTAutenticarFilter extends UsernamePasswordAuthenticationFilter {
 
@@ -47,7 +46,7 @@ public class JWTAutenticarFilter extends UsernamePasswordAuthenticationFilter {
             return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                     usuario.getLogin(),
                     usuario.getPassword(),
-                    new ArrayList<>()
+                    usuario.getAuthorities()
             ));
         } catch (IOException e) {
             throw new RuntimeException("Falha ao autenticar usuário ", e);
@@ -60,10 +59,16 @@ public class JWTAutenticarFilter extends UsernamePasswordAuthenticationFilter {
                                             FilterChain chain,
                                             Authentication authResult) throws IOException, ServletException {
         DetalheUsuarioData usuarioData = (DetalheUsuarioData) authResult.getPrincipal();
+        List<String> lista = new ArrayList<>();
+
+        authResult.getAuthorities().forEach(item ->{
+            lista.add(item.getAuthority());
+        });
 
         String token = JWT.create()
                 .withSubject(usuarioData.getUsername())
-                .withClaim("role", usuarioData.getSingleRole())
+                .withClaim("role", lista)
+//                .withClaim("role", usuarioData.getAuthorities())
                 .withExpiresAt(new Date(System.currentTimeMillis()+(TOKEN_EXPIRACAO*2)))
                 .sign(Algorithm.HMAC512(TOKEN_SENHA));
         Token tk = new Token(token);

@@ -1,13 +1,16 @@
 package br.com.igrejaidef.Idef.Service.impl;
 
 import br.com.igrejaidef.Idef.Service.CadastroDeUsuario;
+import br.com.igrejaidef.Idef.model.Role;
 import br.com.igrejaidef.Idef.model.UsuarioModel;
+import br.com.igrejaidef.Idef.repository.RoleRepository;
 import br.com.igrejaidef.Idef.repository.UsuarioRepository;
 import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,11 +22,75 @@ public class CadastroDeUsuarioImpl implements CadastroDeUsuario {
     @Autowired
     PasswordEncoder encoder;
 
+    @Autowired
+    SendEmailService serviceEmail;
+
+    @Autowired
+    RoleRepository roleRepository;
+
     @Override
-    public UsuarioModel salvar(UsuarioModel usuarioModel) {
+    public UsuarioModel salvar(UsuarioModel usuarioModel) throws MessagingException {
         validaUsuario(usuarioModel);
         usuarioModel.setPassword(encoder.encode(usuarioModel.getPassword()));
-        return repository.save(usuarioModel);
+//        serviceEmail.sendEmail(usuarioModel.getEmail(), "<head>\n" +
+//                        "    <meta charset=\"UTF-8\">\n" +
+//                        "    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n" +
+//                        "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n" +
+//                        "    <title>Bem-vindo</title>\n" +
+//                        "    <style>\n" +
+//                        "        *{\n" +
+//                        "            margin: 0;\n" +
+//                        "            padding: 0;\n" +
+//                        "        }\n" +
+//                        "        .banner{\n" +
+//                        "            width: 700px;\n" +
+//                        "            height: auto;\n" +
+//                        "        }\n" +
+//                        "        main {\n" +
+//                        "            display: block;\n" +
+//                        "            width: 700px;\n" +
+//                        "            height: auto;\n" +
+//                        "            margin: auto;\n" +
+//                        "        }\n" +
+//                        "        article {\n" +
+//                        "            background-color: rgb(31, 31, 31);\n" +
+//                        "            color: white;\n" +
+//                        "            height: 350px;\n" +
+//                        "            padding: 2rem;\n" +
+//                        "        }\n" +
+//                        "        .title {\n" +
+//                        "            font-size: 60px;\n" +
+//                        "            margin-bottom: 1rem;\n" +
+//                        "        }\n" +
+//                        "        .content {\n" +
+//                        "            font-size: 25px;\n" +
+//                        "            line-height: 2.5rem;\n" +
+//                        "        }\n" +
+//                        "    </style>\n" +
+//                        "</head>\n" +
+//                        "<body>\n" +
+//                        "    <main>\n" +
+//                        "        <img class=\"banner\" src=\"https://ohlaladani.com.br/wp-content/uploads/wallpaper-OHLALADANI_DESKTOP_WALLPAPERS_AVENTURA-2.jpg\" \n" +
+//                        "        alt=\"Homem pulando de um penhasco para o outro, segurnado uma bandeira \">\n" +
+//                        "        <article>\n" +
+//                        "            <h1 class=\"title\">Seja bem vindo a nossa igreja.</h1>\n" +
+//                        "            <p class=\"content\">\n" +
+//                        "                Somos uma igreja que tem como principio o seguinte Texto. \"Uma família de famílias\". Ficamos muito gratos em ter você como nosso membro.\n" +
+//                        "                nos vemos no próximo culto. até logo.\n" +
+//                        "\n" +
+//                        "                Atenciosamento: Jonathan Lauro.\n" +
+//                        "            </p>\n" +
+//                        "        </article>\n" +
+//                        "    </main>\n" +
+//                        "</body>"
+//                ,"Bem-vindo " + usuarioModel.getUsername());
+
+        UsuarioModel retorno = repository.save(usuarioModel);
+        usuarioModel.getRoles().forEach(item -> {
+            roleRepository.save(new Role(null,item.getAuthority(),retorno));
+        });
+
+        return retorno;
     }
 
     @Override

@@ -18,7 +18,8 @@ public class DetalheUsuarioData implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-    return usuario.orElse(new UsuarioModel()).getAuthorities();
+        return  usuario.get().getAuthorities();
+//    return usuario.orElse(new UsuarioModel()).getAuthorities();
     }
 
     @Override
@@ -51,7 +52,4 @@ public class DetalheUsuarioData implements UserDetails {
         return true;
     }
 
-    public String getSingleRole(){
-        return usuario.orElse(new UsuarioModel()).getRole();
-    }
 }

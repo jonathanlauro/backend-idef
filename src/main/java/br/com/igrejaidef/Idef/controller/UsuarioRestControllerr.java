@@ -2,8 +2,11 @@ package br.com.igrejaidef.Idef.controller;
 
 import br.com.igrejaidef.Idef.dto.modelo.Usuario;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.RolesAllowed;
 import javax.websocket.server.PathParam;
 import java.util.List;
 
@@ -15,6 +18,7 @@ public interface UsuarioRestControllerr {
     ResponseEntity<List<Usuario>> ListarTodosUsuarios() throws Exception;
 
     @PostMapping
+//    @PreAuthorize("hasRole('ROLE_ADMIN')")
     ResponseEntity<Usuario> cadastrarUsuario(@RequestBody Usuario usuario) throws Exception;
 
     @PutMapping

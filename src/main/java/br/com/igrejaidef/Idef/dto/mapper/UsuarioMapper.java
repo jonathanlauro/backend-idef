@@ -1,11 +1,13 @@
 package br.com.igrejaidef.Idef.dto.mapper;
 
 import br.com.igrejaidef.Idef.dto.modelo.Usuario;
+import br.com.igrejaidef.Idef.model.Role;
 import br.com.igrejaidef.Idef.model.UsuarioModel;
 import br.com.igrejaidef.Idef.utils.UtilitarioDeConversao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -40,7 +42,7 @@ public class UsuarioMapper implements Mapper<UsuarioModel, Usuario>{
                 model.getLogin(),
                 model.getPassword(),
                 model.getEmail(),
-                model.getRole()
+                getListNameRoles(model.getRoles())
         );
     }
     public UsuarioModel fromDto(Usuario dto){
@@ -49,7 +51,23 @@ public class UsuarioMapper implements Mapper<UsuarioModel, Usuario>{
                 dto.getLogin(),
                 dto.getPassword(),
                 dto.getEmail(),
-                dto.getRole()
+                convertStringToRole(dto.getRoles())
         );
     }
+
+    private List<String> getListNameRoles(List<Role> roles){
+        List<String> rolesName = new ArrayList<>();
+        roles.forEach(item -> rolesName.add(item.getAuthority()));
+        return rolesName;
+    }
+    private List<Role> convertStringToRole(List<String> nameRoles){
+        List<Role> roles = new ArrayList<>();
+
+        nameRoles.forEach(item -> {
+            roles.add(new Role(null,item,null));
+        });
+
+        return roles;
+    }
 }
+
