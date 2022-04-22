@@ -22,6 +22,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class JWTAutenticarFilter extends UsernamePasswordAuthenticationFilter {
@@ -47,7 +48,7 @@ public class JWTAutenticarFilter extends UsernamePasswordAuthenticationFilter {
             return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                     usuario.getLogin(),
                     usuario.getPassword(),
-                    new ArrayList<>()
+                    usuario.getAuthorities()
             ));
         } catch (IOException e) {
             throw new RuntimeException("Falha ao autenticar usuário ", e);
@@ -60,10 +61,13 @@ public class JWTAutenticarFilter extends UsernamePasswordAuthenticationFilter {
                                             FilterChain chain,
                                             Authentication authResult) throws IOException, ServletException {
         DetalheUsuarioData usuarioData = (DetalheUsuarioData) authResult.getPrincipal();
+        List<String> roles = new ArrayList<>();
+        usuarioData.getAuthorities().forEach(item -> roles.add(usuarioData.getAuthorities().toString()));
 
         String token = JWT.create()
                 .withSubject(usuarioData.getUsername())
                 .withClaim("role", usuarioData.getSingleRole())
+//                .withClaim("ROLA2", roles)
                 .withExpiresAt(new Date(System.currentTimeMillis()+(TOKEN_EXPIRACAO*2)))
                 .sign(Algorithm.HMAC512(TOKEN_SENHA));
         Token tk = new Token(token);

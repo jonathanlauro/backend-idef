@@ -1,8 +1,7 @@
 package br.com.igrejaidef.Idef.dto.modelo;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-
-import javax.persistence.Column;
+import org.springframework.lang.NonNull;
 
 public class Usuario {
 
@@ -11,18 +10,91 @@ public class Usuario {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     private String email;
-    private String role;
+    private String nomeCompleto;
+    private String telefone;
+    @NonNull
+    private StatusUsuario status;
+    @NonNull
+    private TipoUsuario tipo;
+    @NonNull
+    private Sexo sexo;
+    @NonNull
+    private RoleUsuario role;
 
-    public Usuario(){
-        this(null,null,null,null,null);
+    public static Builder novoUsuario(){
+        return new Builder();
     }
 
-    public Usuario(Long id, String login, String password, String email,String role) {
-        this.id = id;
-        this.login = login;
-        this.password = password;
-        this.email = email;
-        this.role = role;
+    public static final class Builder {
+        private Long id;
+        private String login;
+        private String password;
+        private String email;
+        private String nomeCompleto;
+        private String telefone;
+        private StatusUsuario status;
+        private TipoUsuario tipo;
+        private Sexo sexo;
+        private RoleUsuario role;
+
+        private Builder(){
+        }
+
+        public Builder withId(Long id){
+            this.id = id;
+            return this;
+        }
+        public Builder withLogin(String login) {
+            this.login = login;
+            return this;
+        }
+        public Builder withPassword(String password) {
+            this.password = password;
+            return this;
+        }
+        public Builder withEmail(String email) {
+            this.email = email;
+            return this;
+        }
+        public Builder withNomeCompleto(String nomeCompleto) {
+            this.nomeCompleto = nomeCompleto;
+            return this;
+        }
+        public Builder withTelefone(String telefone) {
+            this.telefone = telefone;
+            return this;
+        }
+        public Builder withStatus(StatusUsuario status) {
+            this.status = status;
+            return this;
+        }
+        public Builder withTipo(TipoUsuario tipo){
+            this.tipo = tipo;
+            return this;
+        }
+        public Builder withSexo(Sexo sexo){
+            this.sexo = sexo;
+            return this;
+        }
+        public Builder withRole(RoleUsuario role){
+            this.role = role;
+            return this;
+        }
+
+        public Usuario build(){
+            Usuario usuario = new Usuario();
+            usuario.setId(id);
+            usuario.setLogin(login);
+            usuario.setPassword(password);
+            usuario.setEmail(email);
+            usuario.setNomeCompleto(nomeCompleto);
+            usuario.setTelefone(telefone);
+            usuario.setStatus(status);
+            usuario.setTipo(tipo);
+            usuario.setSexo(sexo);
+            usuario.setRole(role);
+            return usuario;
+        }
     }
 
     public Long getId() {
@@ -57,12 +129,52 @@ public class Usuario {
         this.email = email;
     }
 
-    public String getRole() {
+    public String getNomeCompleto() {
+        return nomeCompleto;
+    }
+
+    public void setNomeCompleto(String nomeCompleto) {
+        this.nomeCompleto = nomeCompleto;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+
+    public RoleUsuario getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(RoleUsuario role) {
         this.role = role;
+    }
+
+    public StatusUsuario getStatus() {
+        return status;
+    }
+
+    public void setStatus(StatusUsuario status) {
+        this.status = status;
+    }
+
+    public TipoUsuario getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(TipoUsuario tipo) {
+        this.tipo = tipo;
+    }
+
+    public Sexo getSexo() {
+        return sexo;
+    }
+
+    public void setSexo(Sexo sexo) {
+        this.sexo = sexo;
     }
 
     @Override
@@ -72,6 +184,11 @@ public class Usuario {
                 ", login='" + login + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
+                ", nomeCompleto='" + nomeCompleto + '\'' +
+                ", telefone='" + telefone + '\'' +
+                ", status=" + status +
+                ", tipo=" + tipo +
+                ", sexo=" + sexo +
                 ", role='" + role + '\'' +
                 '}';
     }
