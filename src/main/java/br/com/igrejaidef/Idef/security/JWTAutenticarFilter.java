@@ -48,7 +48,7 @@ public class JWTAutenticarFilter extends UsernamePasswordAuthenticationFilter {
             return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                     usuario.getLogin(),
                     usuario.getPassword(),
-                    usuario.getAuthorities()
+                    new ArrayList<>()
             ));
         } catch (IOException e) {
             throw new RuntimeException("Falha ao autenticar usuário ", e);
@@ -67,7 +67,6 @@ public class JWTAutenticarFilter extends UsernamePasswordAuthenticationFilter {
         String token = JWT.create()
                 .withSubject(usuarioData.getUsername())
                 .withClaim("role", usuarioData.getSingleRole())
-//                .withClaim("ROLA2", roles)
                 .withExpiresAt(new Date(System.currentTimeMillis()+(TOKEN_EXPIRACAO*2)))
                 .sign(Algorithm.HMAC512(TOKEN_SENHA));
         Token tk = new Token(token);
